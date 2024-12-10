@@ -11,6 +11,10 @@ def get_data_2():
     """
     data = get_data_1()
     data["Year"] = pd.to_numeric(data["Year"], errors="coerce")
+
+    critical_columns = ["gdp_per_capita", "Year", "difference_labor_force_participation_rate"]
+    data = data.dropna(subset=critical_columns)
+
     return data
 
 def save_data_2(data, mydb, cursor, db_name):

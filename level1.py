@@ -5,7 +5,6 @@ import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 
-
 def get_data_1():
     indicators = {
         "GDP per capita (current US$)": "NY.GDP.PCAP.CD",

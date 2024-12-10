@@ -33,6 +33,21 @@ def get_data_3(x_indicator_codes):
     df = pd.DataFrame(data)
     df = df.pivot_table(index=["Country", "Year"], columns="Indicator", values="Value").reset_index()
 
+    df = df.rename(columns={
+        "NY.GDP.PCAP.CD": "gdp_per_capita",
+        "SL.TLF.CACT.MA.ZS": "labor_force_male",
+        "SL.TLF.CACT.FE.ZS": "labor_force_female",
+        "SL.TLF.TOTL.FE.ZS": "labor_force_female_total",
+        "SE.ADT.LITR.MA.ZS": "literacy_rate_male",
+        "SE.ADT.LITR.FE.ZS": "literacy_rate_female",
+        "SP.DYN.LE00.MA.IN": "life_expectancy_male",
+        "SP.DYN.LE00.FE.IN": "life_expectancy_female"
+    })
+
+    df["Year"] = pd.to_numeric(df["Year"], errors="coerce")
+
+    df = df.fillna(0)
+
     return df
 
 def save_data_3(data, mydb, cursor, db_name):
@@ -182,8 +197,6 @@ def plot_data_3(data):
 
     num_factors = len(factors)
     fig, axes = plt.subplots(num_factors, 1, figsize=(8, 4 * num_factors), sharex=False)
-
-    print(data.columns)
 
     for i, factor in enumerate(factors):
         ax = axes[i]
